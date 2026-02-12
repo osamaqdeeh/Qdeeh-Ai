@@ -1,0 +1,103 @@
+========================================
+   📝 CREATE NEW GITHUB REPOSITORY
+========================================
+
+Your local Git repository is ready!
+
+STEP 1: Create Repository on GitHub
+----------------------------------------
+1. Go to: https://github.com/new
+
+2. Login with account: osamaqdeeh
+   Email: osamaqdeeh2010@gmail.com
+
+3. Fill in the form:
+   - Repository name: Qdeeh-AI (or any name you want)
+   - Description: AI Learning Management Platform
+   - Visibility: ☑ Public (or Private if you prefer)
+   - ☐ DO NOT check "Add a README file"
+   - ☐ DO NOT check "Add .gitignore"
+   - ☐ DO NOT check "Choose a license"
+
+4. Click "Create repository"
+
+
+STEP 2: Connect & Push
+----------------------------------------
+After creating the repo, GitHub will show commands.
+
+Copy the repository URL, it will look like:
+https://github.com/osamaqdeeh/Qdeeh-AI.git
+
+Then run these commands here (I'll help you):
+1. Tell me the repository URL
+2. I'll push everything for you
+
+
+========================================
+   🚀 THEN: DEPLOY TO VERCEL
+========================================
+
+After pushing to GitHub:
+
+1. Go to: https://vercel.com
+
+2. Sign in with:
+   - Click "Continue with GitHub"
+   - Use email: osamaqdeeh2010@gmail.com
+   - Login to GitHub account: osamaqdeeh
+
+3. Import your NEW repository:
+   - Click "Add New Project"
+   - Select: osamaqdeeh/Qdeeh-AI (your new repo)
+
+4. Configure:
+   - Framework: Next.js (auto-detected)
+   - Build Command: npm run build
+   - Output Directory: .next
+   - Install Command: npm install
+
+5. Click "Deploy"
+
+6. Wait 2-3 minutes
+
+7. 🎉 Your website will be LIVE!
+   - You'll get a URL like: https://qdeeh-ai.vercel.app
+   - This is your ACTUAL WEBSITE (not README)
+
+
+========================================
+   ⚙️ AFTER DEPLOYMENT
+========================================
+
+Add environment variables in Vercel:
+1. Go to Settings → Environment Variables
+2. Add all from your .env file:
+   - DATABASE_URL
+   - NEXTAUTH_SECRET
+   - NEXTAUTH_URL (use your Vercel URL)
+   - GOOGLE_CLIENT_ID
+   - GOOGLE_CLIENT_SECRET
+   - STRIPE_SECRET_KEY
+   - STRIPE_PUBLISHABLE_KEY
+   - STRIPE_WEBHOOK_SECRET
+   - NEXT_PUBLIC_APP_URL
+
+3. Redeploy after adding variables
+
+
+========================================
+   🔄 AUTOMATIC DEPLOYMENT
+========================================
+
+From now on:
+- Every git push = Automatic deployment
+- Your website updates in 2 minutes
+- No manual work needed!
+
+
+========================================
+
+Ready? Create the GitHub repo and tell me the URL!
+
+========================================
