@@ -1,0 +1,478 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CourseLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  ALL_LEVELS
+}
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCEEDED
+  FAILED
+  REFUNDED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
+}
+
+// Separate Students table
+model Student {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  blocked       Boolean   @default(false)
+  
+  // Student-specific fields
+  phone         String?
+  bio           String?
+  country       String?
+  
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  enrollments   Enrollment[]
+  payments      Payment[]
+  reviews       Review[]
+  progress      LessonProgress[]
+  certificates  Certificate[]
+  notes         Note[]
+  
+  @@index([email])
+  @@index([blocked])
+  @@map("students")
+}
+
+// Separate Admins table
+model Admin {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  isSuperAdmin  Boolean   @default(false)
+  
+  // Admin-specific fields
+  permissions   String[]  @default([])
+  lastLoginAt   DateTime?
+  
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  activityLogs  AdminActivityLog[]
+  
+  @@map("admins")
+}
+
+// Track when students are promoted to admin
+model StudentToAdminConversion {
+  id              String   @id @default(cuid())
+  studentEmail    String   @unique
+  studentId       String
+  adminId         String
+  convertedAt     DateTime @default(now())
+  convertedBy     String   // Admin ID who did the conversion
+  notes           String?
+  
+  @@map("student_to_admin_conversions")
+}
+
+// Admin activity logging
+model AdminActivityLog {
+  id          String   @id @default(cuid())
+  adminId     String
+  admin       Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  action      String   // e.g., "CREATE_COURSE", "DELETE_USER", "CONVERT_TO_ADMIN"
+  entityType  String?  // e.g., "COURSE", "USER", "COUPON"
+  entityId    String?
+  details     Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  
+  @@index([adminId])
+  @@index([createdAt])
+  @@map("admin_activity_logs")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  userType          String  // "STUDENT" or "ADMIN"
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  student Student? @relation(fields: [userId], references: [id], onDelete: Cascade, map: "account_student_fkey")
+  admin   Admin?   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "account_admin_fkey")
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  userType     String   // "STUDENT" or "ADMIN"
+  expires      DateTime
+  
+  student Student? @relation(fields: [userId], references: [id], onDelete: Cascade, map: "session_student_fkey")
+  admin   Admin?   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "session_admin_fkey")
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  icon        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  courses Course[]
+  
+  @@map("categories")
+}
+
+model Course {
+  id              String       @id @default(cuid())
+  title           String
+  slug            String       @unique
+  description     String       @db.Text
+  shortDescription String?     @db.Text
+  thumbnail       String?
+  previewVideo    String?
+  price           Float
+  discountPrice   Float?
+  level           CourseLevel  @default(ALL_LEVELS)
+  status          CourseStatus @default(DRAFT)
+  language        String       @default("English")
+  duration        Int?         // Total duration in minutes
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String[]
+  
+  // Stats
+  studentsCount   Int          @default(0)
+  rating          Float        @default(0)
+  reviewsCount    Int          @default(0)
+  
+  // What students will learn
+  learningOutcomes String[]
+  
+  // Requirements
+  requirements    String[]
+  
+  // Instructor info
+  instructorName  String
+  instructorBio   String?      @db.Text
+  instructorImage String?
+  
+  categoryId      String
+  category        Category     @relation(fields: [categoryId], references: [id])
+  
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  publishedAt     DateTime?
+  
+  // Relations
+  sections        Section[]
+  enrollments     Enrollment[]
+  reviews         Review[]
+  coupons         CourseCoupon[]
+  
+  @@index([slug])
+  @@index([categoryId])
+  @@index([status])
+  @@index([studentsCount])
+  @@index([rating])
+  @@index([createdAt])
+  @@index([status, studentsCount])
+  @@map("courses")
+}
+
+model Section {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  order       Int
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  lessons     Lesson[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("sections")
+}
+
+model Lesson {
+  id          String   @id @default(cuid())
+  title       String
+  description String?  @db.Text
+  order       Int
+  duration    Int      // Duration in seconds
+  
+  // Video
+  videoUrl    String?
+  videoId     String?  // Cloudflare Stream or Mux video ID
+  thumbnailUrl String?
+  
+  // Resources
+  attachments Json?    // Array of {name, url, size}
+  
+  // Content
+  content     String?  @db.Text
+  
+  isFree      Boolean  @default(false)
+  isPublished Boolean  @default(false)
+  
+  sectionId   String
+  section     Section  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  
+  progress    LessonProgress[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("lessons")
+}
+
+model Enrollment {
+  id              String           @id @default(cuid())
+  studentId       String
+  courseId        String
+  status          EnrollmentStatus @default(ACTIVE)
+  progress        Float            @default(0) // 0-100
+  completedAt     DateTime?
+  certificateIssued Boolean        @default(false)
+  
+  student         Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course          Course           @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@unique([studentId, courseId])
+  @@index([studentId])
+  @@index([courseId])
+  @@map("enrollments")
+}
+
+model LessonProgress {
+  id          String   @id @default(cuid())
+  studentId   String
+  lessonId    String
+  completed   Boolean  @default(false)
+  watchTime   Int      @default(0) // Seconds watched
+  lastPosition Int     @default(0) // Last video position in seconds
+  
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([studentId, lessonId])
+  @@map("lesson_progress")
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  studentId       String
+  courseId        String
+  amount          Float
+  currency        String        @default("usd")
+  status          PaymentStatus @default(PENDING)
+  
+  // Stripe
+  stripePaymentIntentId String?  @unique
+  stripeCustomerId      String?
+  
+  // Coupon applied
+  couponId        String?
+  discountAmount  Float?
+  
+  metadata        Json?
+  
+  student         Student       @relation(fields: [studentId], references: [id])
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  @@index([studentId])
+  @@index([stripePaymentIntentId])
+  @@index([status, createdAt])
+  @@index([createdAt])
+  @@map("payments")
+}
+
+model Coupon {
+  id              String       @id @default(cuid())
+  code            String       @unique
+  discountType    DiscountType
+  discountValue   Float        // Percentage (0-100) or fixed amount
+  
+  // Limits
+  maxUses         Int?         // Total usage limit
+  maxUsesPerUser  Int?         @default(1)
+  currentUses     Int          @default(0)
+  
+  // Restrictions
+  minPurchaseAmount Float?
+  
+  // Validity
+  validFrom       DateTime     @default(now())
+  validUntil      DateTime?
+  
+  isActive        Boolean      @default(true)
+  
+  // Course restrictions
+  courses         CourseCoupon[]
+  
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  @@index([code])
+  @@map("coupons")
+}
+
+model CourseCoupon {
+  courseId String
+  couponId String
+  
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  coupon   Coupon @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  
+  @@id([courseId, couponId])
+  @@map("course_coupons")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  studentId String
+  courseId  String
+  rating    Int      // 1-5
+  comment   String?  @db.Text
+  approved  Boolean  @default(false)
+  
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([studentId, courseId])
+  @@index([courseId])
+  @@index([approved, rating])
+  @@index([createdAt])
+  @@map("reviews")
+}
+
+model Certificate {
+  id              String   @id @default(cuid())
+  studentId       String
+  courseId        String
+  certificateNumber String @unique
+  issuedAt        DateTime @default(now())
+  
+  student         Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  @@unique([studentId, courseId])
+  @@map("certificates")
+}
+
+model Note {
+  id          String   @id @default(cuid())
+  studentId   String
+  lessonId    String
+  content     String   @db.Text
+  timestamp   Int?     // Video timestamp in seconds
+  
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([studentId])
+  @@map("notes")
+}
+
+model Announcement {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   @db.Text
+  type        String   @default("info") // info, warning, success
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("announcements")
+}
+
+model Settings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String   @db.Text
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("settings")
+}

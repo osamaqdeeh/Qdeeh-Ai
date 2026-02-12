@@ -1,0 +1,593 @@
+========================================
+Starting QdeehAi Development Server
+========================================
+
+Checking for existing servers...
+
+Starting development server...
+
+The server will be available at: http://localhost:3000
+
+Login credentials:
+  Admin: http://localhost:3000/admin-dashboard-secret
+         Email: admin@example.com
+         Password: admin123
+
+  Student: Email: student@example.com
+           Password: student123
+
+Press Ctrl+C to stop the server
+========================================
+
+
+> qdeeh-ai@1.0.0 dev
+> next dev
+
+   ▲ Next.js 15.0.3
+   - Local:        http://localhost:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 5.7s
+ ○ Compiling / ...
+ ✓ Compiled / in 10.9s (1582 modules)
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ✓ Compiled in 1623ms (765 modules)
+ GET / 200 in 13381ms
+ ○ Compiling /courses ...
+ ✓ Compiled /courses in 6s (2135 modules)
+ GET /courses 200 in 7068ms
+ GET /courses 200 in 48ms
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 1077ms (249 modules)
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 2.1s (2153 modules)
+ GET /dashboard 200 in 2779ms
+ GET /courses 200 in 112ms
+ GET / 200 in 146ms
+ GET /dashboard 200 in 81ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET / 200 in 148ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ POST /dashboard 303 in 672ms
+ GET / 200 in 130ms
+ GET / 200 in 65ms
+ ○ Compiling /auth/signup ...
+ ✓ Compiled /auth/signup in 3.5s (2170 modules)
+ GET /auth/signup 200 in 3939ms
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 1541ms (2177 modules)
+ GET /api/auth/providers 200 in 5524ms
+ GET /api/auth/signin?callbackUrl=%2Fdashboard 302 in 38ms
+ ○ Compiling /auth/signin ...
+ ✓ Compiled /auth/signin in 1142ms (2184 modules)
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 1840ms
+Auth error: Error: Invalid credentials
+    at Object.authorize (src\auth.ts:89:20)
+    at async signInAction (src\lib\actions\auth.ts:85:4)
+    at async (webpack://next/dist/src/server/app-render/action-handler.ts:881:24)
+    at async handleAction (webpack://next/dist/src/server/app-render/action-handler.ts:617:4)
+    at async renderToHTMLOrFlightImpl (webpack://next/dist/src/server/app-render/app-render.tsx:1310:34)
+    at async doRender (node_modules\next\src\server\base-server.ts:2666:21)
+    at async responseGenerator (node_modules\next\src\server\base-server.ts:3027:21)
+    at async DevServer.renderToResponseWithComponentsImpl (node_modules\next\src\server\base-server.ts:3039:23)
+    at async DevServer.renderPageComponent (node_modules\next\src\server\base-server.ts:3597:15)
+    at async DevServer.renderToResponseImpl (node_modules\next\src\server\base-server.ts:3659:23)
+    at async DevServer.pipeImpl (node_modules\next\src\server\base-server.ts:1698:20)
+    at async NextNodeServer.handleCatchallRenderRequest (node_modules\next\src\server\next-server.ts:1034:6)
+    at async DevServer.handleRequestImpl (node_modules\next\src\server\base-server.ts:1462:8)
+    at async (node_modules\next\src\server\dev\next-dev-server.ts:514:13)
+    at async Span.traceAsyncFn (node_modules\next\src\trace\trace.ts:143:13)
+    at async DevServer.handleRequest (node_modules\next\src\server\dev\next-dev-server.ts:512:19)
+    at async invokeRender (node_modules\next\src\server\lib\router-server.ts:284:10)
+    at async handleRequest (node_modules\next\src\server\lib\router-server.ts:530:15)
+    at async requestHandlerImpl (node_modules\next\src\server\lib\router-server.ts:576:6)
+    at async Server.requestListener (node_modules\next\src\server\lib\start-server.ts:146:6)
+  87 |
+  88 |             if (!student || !student.password) {
+> 89 |               throw new Error("Invalid credentials");
+     |                    ^
+  90 |             }
+  91 |
+  92 |             if (student.blocked) {
+[auth][error] CredentialsSignin: Read more at https://errors.authjs.dev#credentialssignin
+    at Module.callback (webpack-internal:///(action-browser)/./node_modules/next-auth/node_modules/@auth/core/lib/actions/callback/index.js:246:23)
+    at async AuthInternal (webpack-internal:///(action-browser)/./node_modules/next-auth/node_modules/@auth/core/lib/index.js:70:24)
+    at async Auth (webpack-internal:///(action-browser)/./node_modules/next-auth/node_modules/@auth/core/index.js:130:34)
+    at async signIn (webpack-internal:///(action-browser)/./node_modules/next-auth/lib/actions.js:53:17)
+    at async signInAction (webpack-internal:///(action-browser)/./src/lib/actions/auth.ts:104:9)
+    at async C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:157:2088
+    at async handleAction (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:156:20457)
+    at async renderToHTMLOrFlightImpl (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:161:19013)
+    at async doRender (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\base-server.js:1568:34)
+    at async responseGenerator (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\base-server.js:1814:28)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\base-server.js:1824:28)
+    at async DevServer.renderPageComponent (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\base-server.js:2240:24)
+    at async DevServer.renderToResponseImpl (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\base-server.js:2278:32)
+    at async DevServer.pipeImpl (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\base-server.js:960:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\next-server.js:281:17)
+    at async DevServer.handleRequestImpl (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\base-server.js:853:17)
+    at async C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\dev\next-dev-server.js:373:20
+    at async Span.traceAsyncFn (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\trace\trace.js:153:20)
+    at async DevServer.handleRequest (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\dev\next-dev-server.js:370:24)
+    at async invokeRender (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\lib\router-server.js:183:21)
+    at async handleRequest (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\lib\router-server.js:360:24)
+    at async requestHandlerImpl (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\lib\router-server.js:384:13)
+    at async Server.requestListener (C:\Users\PC-\Desktop\tool\project\node_modules\next\dist\server\lib\start-server.js:142:13)
+ POST /auth/signin?callbackUrl=http%3A%2F%2Flocalhost%3A3000%2Fdashboard 200 in 1763ms
+ ○ Compiling /auth/admin-signin ...
+ ✓ Compiled /auth/admin-signin in 4.2s (2201 modules)
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /auth/admin-signin 200 in 5326ms
+ ✓ Compiled in 1259ms (874 modules)
+ ○ Compiling /admin-dashboard-secret ...
+ ✓ Compiled /admin-dashboard-secret in 5.2s (2886 modules)
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret 200 in 179ms
+ GET /admin-dashboard-secret 200 in 6577ms
+ POST /auth/admin-signin 303 in 7700ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1952ms (2867 modules)
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/users 404 in 2360ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/users 500 in 433ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret 200 in 1110ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret 200 in 183ms
+ ○ Compiling /admin-dashboard-secret/videos ...
+ ✓ Compiled /admin-dashboard-secret/videos in 4s (2912 modules)
+ GET /admin-dashboard-secret/videos 200 in 4826ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1172ms (1473 modules)
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/analytics 404 in 1875ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/analytics 404 in 60ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/analytics 404 in 44ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/analytics 500 in 471ms
+ ○ Compiling / ...
+ ✓ Compiled / in 5s (1871 modules)
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret/videos 200 in 731ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/settings 404 in 36ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/settings 500 in 77ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret/videos 200 in 221ms
+ ○ Compiling /admin-dashboard-secret/courses ...
+ ✓ Compiled /admin-dashboard-secret/courses in 5.1s (2947 modules)
+ GET /admin-dashboard-secret/courses 200 in 5842ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret/courses 200 in 81ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/courses/new 404 in 53ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/courses/new 500 in 335ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret/courses 200 in 352ms
+ GET /admin-dashboard-secret 200 in 341ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/settings 404 in 45ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/settings 500 in 108ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret 200 in 718ms
+ ○ Compiling /admin-dashboard-secret/coupons ...
+ ✓ Compiled /admin-dashboard-secret/coupons in 5.1s (3017 modules)
+ GET /admin-dashboard-secret/coupons 200 in 5871ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret/coupons 200 in 84ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ POST /admin-dashboard-secret/coupons 200 in 512ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ POST /admin-dashboard-secret/coupons 200 in 109ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ POST /admin-dashboard-secret/coupons 200 in 117ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ POST /admin-dashboard-secret/coupons 200 in 174ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/reviews 404 in 70ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/reviews 500 in 416ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ GET /admin-dashboard-secret/coupons 200 in 502ms
+ GET /admin-dashboard-secret/courses 200 in 116ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/courses/new 404 in 45ms
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "3649674077"
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <button className=... ref=... onClick={function onClick} children=...>
+                                        ^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at stringify (<anonymous>)
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+digest: "1804844310"
+ GET /admin-dashboard-secret/courses/new 500 in 108ms
