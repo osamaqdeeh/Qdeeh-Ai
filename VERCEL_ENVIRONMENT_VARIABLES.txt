@@ -1,0 +1,159 @@
+========================================
+   ⚙️ HOW TO ADD ENVIRONMENT VARIABLES
+========================================
+
+✅ FIXED: vercel.json error removed!
+
+Now you can deploy without errors.
+
+========================================
+   📝 STEP 1: DEPLOY FIRST (Without Env Vars)
+========================================
+
+1. In Vercel, click "Deploy" 
+   - Framework Preset: Next.js
+   - Don't add environment variables yet
+   - Just click Deploy
+
+2. The build will complete (might show runtime errors)
+
+3. You'll get a URL like: https://qdeeh-ai.vercel.app
+
+========================================
+   ⚙️ STEP 2: ADD ENVIRONMENT VARIABLES
+========================================
+
+After first deployment:
+
+1. Go to your Vercel Dashboard
+2. Click on your project
+3. Go to: Settings → Environment Variables
+4. Add each variable ONE BY ONE:
+
+---
+
+Variable Name: DATABASE_URL
+Value: (your database connection string)
+Example: postgresql://user:password@host:5432/database
+Environment: Production, Preview, Development (select all 3)
+
+---
+
+Variable Name: NEXTAUTH_SECRET
+Value: (generate a random secret)
+Example: openssl rand -base64 32
+Or use: https://generate-secret.vercel.app/32
+Environment: Production, Preview, Development (select all 3)
+
+---
+
+Variable Name: NEXTAUTH_URL
+Value: https://your-project.vercel.app
+(Use the URL Vercel gave you)
+Environment: Production
+
+---
+
+Variable Name: GOOGLE_CLIENT_ID
+Value: (from Google Cloud Console)
+Environment: Production, Preview, Development (select all 3)
+
+---
+
+Variable Name: GOOGLE_CLIENT_SECRET
+Value: (from Google Cloud Console)
+Environment: Production, Preview, Development (select all 3)
+
+---
+
+Variable Name: STRIPE_SECRET_KEY
+Value: sk_test_... or sk_live_...
+Environment: Production, Preview, Development (select all 3)
+
+---
+
+Variable Name: STRIPE_PUBLISHABLE_KEY
+Value: pk_test_... or pk_live_...
+Environment: Production, Preview, Development (select all 3)
+
+---
+
+Variable Name: STRIPE_WEBHOOK_SECRET
+Value: whsec_...
+(Get from Stripe Dashboard → Webhooks)
+Environment: Production, Preview, Development (select all 3)
+
+---
+
+Variable Name: NEXT_PUBLIC_APP_URL
+Value: https://your-project.vercel.app
+Environment: Production
+
+---
+
+Variable Name: MUX_TOKEN_ID
+Value: (if using Mux for video)
+Environment: Production, Preview, Development (optional)
+
+---
+
+Variable Name: MUX_TOKEN_SECRET
+Value: (if using Mux for video)
+Environment: Production, Preview, Development (optional)
+
+---
+
+========================================
+   🔄 STEP 3: REDEPLOY
+========================================
+
+After adding ALL environment variables:
+
+1. Go to: Deployments tab
+2. Find the latest deployment
+3. Click the "..." (three dots) button
+4. Click "Redeploy"
+5. Wait 2 minutes
+6. ✅ Your website will work perfectly!
+
+========================================
+   💡 IMPORTANT TIPS
+========================================
+
+✅ Add ALL variables before redeploying
+✅ Select all 3 environments for each variable
+✅ Use your Vercel URL for NEXTAUTH_URL and NEXT_PUBLIC_APP_URL
+✅ Don't commit .env file to GitHub (it's already in .gitignore)
+✅ Vercel encrypts all environment variables
+
+========================================
+   🔐 GENERATE NEXTAUTH_SECRET
+========================================
+
+Option 1: Online
+https://generate-secret.vercel.app/32
+
+Option 2: Command Line (if you have OpenSSL)
+openssl rand -base64 32
+
+Option 3: Random String
+Any random 32+ character string
+
+========================================
+   🎯 AFTER REDEPLOYMENT
+========================================
+
+Your website will have:
+✅ Working database connection
+✅ User authentication (Google OAuth)
+✅ Payment processing (Stripe)
+✅ All features functional
+
+========================================
+
+Remember: 
+- First deploy = Get your URL
+- Add environment variables = Configure
+- Redeploy = Everything works!
+
+========================================
