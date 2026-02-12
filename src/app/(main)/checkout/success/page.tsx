@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, ArrowRight, BookOpen } from "lucide-react";
 
+// Ensure fresh data after payment
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export default function CheckoutSuccessPage() {
   return (
     <div className="container max-w-2xl py-12">

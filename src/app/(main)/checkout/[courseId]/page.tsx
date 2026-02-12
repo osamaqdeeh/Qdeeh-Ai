@@ -7,6 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { BookOpen, Clock, Award } from "lucide-react";
 import Image from "next/image";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 interface CheckoutPageProps {
   params: Promise<{
     courseId: string;

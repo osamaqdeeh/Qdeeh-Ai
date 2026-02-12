@@ -9,6 +9,10 @@ import { BookOpen, Clock, CheckCircle2, PlayCircle, FileText } from "lucide-reac
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 interface LearnPageProps {
   params: Promise<{
     slug: string;

@@ -1,6 +1,5 @@
 import { requireAdmin } from "@/lib/auth-helpers";
 import { prisma } from "@/lib/prisma";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,7 +10,10 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UserPlus, Mail, Calendar, BookOpen } from "lucide-react";
+import { Mail, Calendar, BookOpen } from "lucide-react";
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export default async function AdminUsersPage() {
   await requireAdmin();
@@ -42,10 +44,11 @@ export default async function AdminUsersPage() {
             Manage students and administrators
           </p>
         </div>
-        <Button>
+        {/* TODO: Implement add user functionality */}
+        {/* <Button disabled>
           <UserPlus className="mr-2 h-4 w-4" />
           Add User
-        </Button>
+        </Button> */}
       </div>
 
       {/* Students Section */}

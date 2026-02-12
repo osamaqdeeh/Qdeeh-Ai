@@ -1,12 +1,14 @@
 import { requireAdmin } from "@/lib/auth-helpers";
 import { prisma } from "@/lib/prisma";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Save, Shield, Mail, Globe } from "lucide-react";
+import { Shield, Mail, Globe } from "lucide-react";
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export default async function AdminSettingsPage() {
   await requireAdmin();
@@ -26,10 +28,11 @@ export default async function AdminSettingsPage() {
             Manage platform settings and configurations
           </p>
         </div>
-        <Button>
+        {/* TODO: Implement save functionality with form/server action */}
+        {/* <Button disabled>
           <Save className="mr-2 h-4 w-4" />
           Save Changes
-        </Button>
+        </Button> */}
       </div>
 
       <Tabs defaultValue="general" className="space-y-4">

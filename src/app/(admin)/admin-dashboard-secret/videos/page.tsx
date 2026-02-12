@@ -6,7 +6,8 @@ import { VideoUploader } from "@/components/admin/video-uploader";
 import { Video, Upload, List } from "lucide-react";
 
 // Revalidate every 2 minutes
-export const revalidate = 120;
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export default async function AdminVideosPage() {
   await requireAdmin();

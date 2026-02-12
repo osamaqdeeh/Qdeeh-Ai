@@ -41,6 +41,13 @@ enum DiscountType {
   FIXED
 }
 
+enum UserRole {
+  USER
+  VIP
+  ADMIN
+  LEADER
+}
+
 // Separate Students table
 model Student {
   id            String    @id @default(cuid())
@@ -52,6 +59,7 @@ model Student {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   blocked       Boolean   @default(false)
+  role          UserRole  @default(USER)
   
   // Student-specific fields
   phone         String?
@@ -67,6 +75,7 @@ model Student {
   progress      LessonProgress[]
   certificates  Certificate[]
   notes         Note[]
+  paymentCredentials PaymentCredentials?
   
   @@index([email])
   @@index([blocked])
@@ -84,6 +93,7 @@ model Admin {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   isSuperAdmin  Boolean   @default(false)
+  role          UserRole  @default(ADMIN)
   
   // Admin-specific fields
   permissions   String[]  @default([])
@@ -362,6 +372,24 @@ model Payment {
   @@map("payments")
 }
 
+// Store user's payment credentials for validation
+model PaymentCredentials {
+  id              String   @id @default(cuid())
+  studentId       String   @unique
+  cardNumber      String   // Stored encrypted/hashed
+  cardholderName  String
+  expiryMonth     String
+  expiryYear      String
+  cvv             String   // Stored encrypted/hashed
+  
+  student         Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@map("payment_credentials")
+}
+
 model Coupon {
   id              String       @id @default(cuid())
   code            String       @unique
@@ -369,8 +397,8 @@ model Coupon {
   discountValue   Float        // Percentage (0-100) or fixed amount
   
   // Limits
-  maxUses         Int?         // Total usage limit
-  maxUsesPerUser  Int?         @default(1)
+  maxUses         Int?         // Total usage limit (null = unlimited)
+  maxUsesPerUser  Int?         // Per-user usage limit (null = unlimited)
   currentUses     Int          @default(0)
   
   // Restrictions

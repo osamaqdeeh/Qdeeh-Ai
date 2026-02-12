@@ -1,6 +1,5 @@
 import { requireAdmin } from "@/lib/auth-helpers";
 import { prisma } from "@/lib/prisma";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,18 +10,41 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Star, CheckCircle, XCircle } from "lucide-react";
+import { Star } from "lucide-react";
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export default async function AdminReviewsPage() {
   await requireAdmin();
 
-  const reviews = await prisma.review.findMany({
-    include: {
-      student: true,
-      course: true,
-    },
-    orderBy: { createdAt: "desc" },
-  });
+  let reviews: Array<{
+    id: string;
+    rating: number;
+    comment: string | null;
+    approved: boolean;
+    createdAt: Date;
+    student: {
+      name: string;
+      email: string;
+      image: string | null;
+    };
+    course: {
+      title: string;
+    };
+  }> = [];
+  
+  try {
+    reviews = await prisma.review.findMany({
+      include: {
+        student: true,
+        course: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+  }
 
   const stats = {
     total: reviews.length,
@@ -89,8 +111,15 @@ export default async function AdminReviewsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {reviews.map((review) => (
-              <TableRow key={review.id}>
+            {reviews.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
+                  No reviews found
+                </TableCell>
+              </TableRow>
+            ) : (
+              reviews.map((review) => (
+                <TableRow key={review.id}>
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <Avatar className="h-8 w-8">
@@ -98,7 +127,7 @@ export default async function AdminReviewsPage() {
                       <AvatarFallback>
                         {review.student.name
                           .split(" ")
-                          .map((n) => n[0])
+                          .map((n: string) => n[0])
                           .join("")
                           .toUpperCase()}
                       </AvatarFallback>
@@ -116,7 +145,7 @@ export default async function AdminReviewsPage() {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1">
-                    {Array.from({ length: review.rating }).map((_, i) => (
+                    {[...Array(review.rating)].map((_, i) => (
                       <Star
                         key={i}
                         className="h-4 w-4 fill-yellow-400 text-yellow-400"
@@ -138,19 +167,21 @@ export default async function AdminReviewsPage() {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <div className="flex gap-2">
+                  {/* TODO: Implement approve/delete functionality with server actions */}
+                  {/* <div className="flex gap-2">
                     {!review.approved && (
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="outline" disabled>
                         <CheckCircle className="h-4 w-4" />
                       </Button>
                     )}
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" disabled>
                       <XCircle className="h-4 w-4" />
                     </Button>
-                  </div>
+                  </div> */}
                 </TableCell>
               </TableRow>
-            ))}
+              ))
+            )}
           </TableBody>
         </Table>
       </div>

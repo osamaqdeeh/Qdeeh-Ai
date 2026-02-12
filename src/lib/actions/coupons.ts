@@ -10,8 +10,8 @@ const couponSchema = z.object({
   code: z.string().min(3).max(20).toUpperCase(),
   discountType: z.nativeEnum(DiscountType),
   discountValue: z.number().min(0),
-  maxUses: z.number().min(1).optional().nullable(),
-  maxUsesPerUser: z.number().min(1).default(1),
+  maxUses: z.number().positive().optional().nullable(), // positive() allows any number > 0, or null for unlimited
+  maxUsesPerUser: z.number().positive().optional().nullable(), // Leave empty for unlimited per user
   minPurchaseAmount: z.number().min(0).optional().nullable(),
   validFrom: z.date().default(() => new Date()),
   validUntil: z.date().optional().nullable(),

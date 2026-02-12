@@ -6,29 +6,34 @@ import { cache } from "react";
 
 // Cache the testimonials query
 const getTestimonials = cache(async () => {
-  return await prisma.review.findMany({
-    where: {
-      approved: true,
-      rating: { gte: 4 },
-    },
-    include: {
-      student: {
-        select: {
-          name: true,
-          image: true,
+  try {
+    return await prisma.review.findMany({
+      where: {
+        approved: true,
+        rating: { gte: 4 },
+      },
+      include: {
+        student: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+        course: {
+          select: {
+            title: true,
+          },
         },
       },
-      course: {
-        select: {
-          title: true,
-        },
+      orderBy: {
+        createdAt: "desc",
       },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 6,
-  });
+      take: 6,
+    });
+  } catch (error) {
+    console.warn("Database not available, returning empty testimonials");
+    return [];
+  }
 });
 
 export async function TestimonialsSection() {
@@ -68,7 +73,7 @@ export async function TestimonialsSection() {
                   </div>
                 </div>
                 <div className="flex gap-1 mb-3">
-                  {Array.from({ length: 5 }).map((_, i) => (
+                  {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
                       className={`h-4 w-4 ${

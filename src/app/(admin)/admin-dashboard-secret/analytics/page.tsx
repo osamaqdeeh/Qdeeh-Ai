@@ -10,6 +10,9 @@ import {
   Video,
 } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export default async function AdminAnalyticsPage() {
   await requireAdmin();
 

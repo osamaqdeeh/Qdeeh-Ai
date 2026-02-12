@@ -11,8 +11,9 @@ import { auth } from "@/auth";
 import { EnrollButton } from "@/components/courses/enroll-button";
 import { CourseReviews } from "@/components/courses/course-reviews";
 
-// Revalidate every 10 minutes
-export const revalidate = 600;
+// Disable static caching for enrollment status accuracy
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 interface CoursePageProps {
   params: Promise<{

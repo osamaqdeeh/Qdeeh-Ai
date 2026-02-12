@@ -5,6 +5,9 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import { CoursesTable } from "@/components/admin/courses-table";
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export default async function AdminCoursesPage() {
   await requireAdmin();
 

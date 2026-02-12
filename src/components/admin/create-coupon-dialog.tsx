@@ -32,9 +32,9 @@ const couponSchema = z.object({
   code: z.string().min(3, "Code must be at least 3 characters").max(20).toUpperCase(),
   discountType: z.enum(["PERCENTAGE", "FIXED"]),
   discountValue: z.number().min(0, "Discount must be positive"),
-  maxUses: z.number().min(1).optional(),
-  maxUsesPerUser: z.number().min(1).default(1),
-  minPurchaseAmount: z.number().min(0).optional(),
+  maxUses: z.union([z.number().positive("Must be greater than 0"), z.nan()]).optional().transform(val => isNaN(val as number) ? undefined : val),
+  maxUsesPerUser: z.union([z.number().positive("Must be greater than 0"), z.nan()]).optional().transform(val => isNaN(val as number) ? undefined : val),
+  minPurchaseAmount: z.union([z.number().min(0), z.nan()]).optional().transform(val => isNaN(val as number) ? undefined : val),
   validFrom: z.string(),
   validUntil: z.string().optional(),
   courseIds: z.array(z.string()).optional(),
@@ -62,7 +62,6 @@ export function CreateCouponDialog({ courses }: CreateCouponDialogProps) {
     resolver: zodResolver(couponSchema),
     defaultValues: {
       discountType: "PERCENTAGE",
-      maxUsesPerUser: 1,
       validFrom: new Date().toISOString().split("T")[0],
     },
   });
@@ -72,12 +71,10 @@ export function CreateCouponDialog({ courses }: CreateCouponDialogProps) {
   const onSubmit = async (data: CouponFormData) => {
     setLoading(true);
     try {
-      // Clean up the data - convert empty/NaN values to undefined for optional fields
+      // Schema already handles NaN -> undefined transformation
       const cleanedData = {
         ...data,
         code: data.code.toUpperCase(),
-        maxUses: data.maxUses && !isNaN(data.maxUses) && data.maxUses > 0 ? data.maxUses : undefined,
-        minPurchaseAmount: data.minPurchaseAmount && !isNaN(data.minPurchaseAmount) && data.minPurchaseAmount > 0 ? data.minPurchaseAmount : undefined,
         validFrom: new Date(data.validFrom),
         validUntil: data.validUntil ? new Date(data.validUntil) : undefined,
         courseIds: selectedCourses.length > 0 ? selectedCourses : undefined,
@@ -203,22 +200,22 @@ export function CreateCouponDialog({ courses }: CreateCouponDialogProps) {
 
             {/* Max Uses */}
             <div className="space-y-2">
-              <Label htmlFor="maxUses">Max Total Uses</Label>
+              <Label htmlFor="maxUses">Max Total Uses (leave empty for unlimited)</Label>
               <Input
                 id="maxUses"
                 type="number"
-                placeholder="Unlimited"
+                placeholder="Leave empty for unlimited"
                 {...register("maxUses", { valueAsNumber: true })}
               />
             </div>
 
             {/* Max Uses Per User */}
             <div className="space-y-2">
-              <Label htmlFor="maxUsesPerUser">Max Uses Per User *</Label>
+              <Label htmlFor="maxUsesPerUser">Max Uses Per User (leave empty for unlimited)</Label>
               <Input
                 id="maxUsesPerUser"
                 type="number"
-                defaultValue={1}
+                placeholder="Leave empty for unlimited"
                 {...register("maxUsesPerUser", { valueAsNumber: true })}
               />
             </div>

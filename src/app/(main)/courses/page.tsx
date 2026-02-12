@@ -2,8 +2,9 @@ import { prisma } from "@/lib/prisma";
 import { CourseCard } from "@/components/course-card";
 import { CourseFilters } from "@/components/courses/course-filters";
 
-// Revalidate every 5 minutes
-export const revalidate = 300;
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 interface CoursesPageProps {
   searchParams: Promise<{

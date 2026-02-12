@@ -45,7 +45,7 @@ export async function CourseReviews({ courseId }: CourseReviewsProps) {
         <div className="text-center">
           <div className="text-5xl font-bold">{averageRating.toFixed(1)}</div>
           <div className="flex justify-center gap-1 my-2">
-            {Array.from({ length: 5 }).map((_, i) => (
+            {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
                 className={`h-5 w-5 ${
@@ -66,7 +66,7 @@ export async function CourseReviews({ courseId }: CourseReviewsProps) {
             return (
               <div key={rating} className="flex items-center gap-2">
                 <div className="flex gap-1 w-20">
-                  {Array.from({ length: 5 }).map((_, i) => (
+                  {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
                       className={`h-3 w-3 ${
@@ -112,7 +112,7 @@ export async function CourseReviews({ courseId }: CourseReviewsProps) {
                       </p>
                     </div>
                     <div className="flex gap-1">
-                      {Array.from({ length: 5 }).map((_, i) => (
+                      {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           className={`h-4 w-4 ${

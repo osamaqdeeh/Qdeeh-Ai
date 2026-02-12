@@ -4,6 +4,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CouponsTable } from "@/components/admin/coupons-table";
 import { CreateCouponDialog } from "@/components/admin/create-coupon-dialog";
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export default async function CouponsPage() {
   await requireAdmin();
 

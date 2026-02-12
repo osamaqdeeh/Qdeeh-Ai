@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma";
 import { EnrollmentsTable } from "@/components/admin/enrollments-table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export default async function EnrollmentsPage() {
   const enrollments = await prisma.enrollment.findMany({
     include: {

@@ -162,7 +162,7 @@ export function CouponsTable({ coupons }: CouponsTableProps) {
                     <TrendingUp className="h-4 w-4 text-muted-foreground" />
                     <span>
                       {coupon.currentUses}
-                      {coupon.maxUses && ` / ${coupon.maxUses}`}
+                      {coupon.maxUses ? ` / ${coupon.maxUses}` : ' / ∞ (unlimited)'}
                     </span>
                   </div>
                   {isMaxedOut && (

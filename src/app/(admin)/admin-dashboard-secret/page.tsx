@@ -6,7 +6,8 @@ import { RevenueChart } from "@/components/admin/revenue-chart";
 import { RecentActivity } from "@/components/admin/recent-activity";
 
 // Revalidate every 2 minutes for admin dashboard
-export const revalidate = 120;
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export default async function AdminDashboardPage() {
   await requireAdmin();

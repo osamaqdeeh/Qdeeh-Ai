@@ -151,6 +151,18 @@ export async function handleSuccessfulPayment(paymentIntentId: string) {
     }
 
     revalidatePath("/dashboard");
+    revalidatePath(`/checkout/${payment.courseId}`);
+    
+    // Get course slug for revalidation
+    const course = await prisma.course.findUnique({
+      where: { id: payment.courseId },
+      select: { slug: true },
+    });
+    
+    if (course) {
+      revalidatePath(`/courses/${course.slug}`);
+    }
+    
     return { success: true };
   } catch (error) {
     console.error("Handle successful payment error:", error);

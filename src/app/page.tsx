@@ -7,15 +7,29 @@ import { FeaturedCourses } from "@/components/home/featured-courses";
 import { StatsSection } from "@/components/home/stats-section";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 
-// Enable ISR - revalidate every 60 seconds
-export const revalidate = 60;
+// Force dynamic rendering to avoid build-time database access
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export default async function HomePage() {
-  const [coursesCount, studentsCount, categoriesCount] = await Promise.all([
-    prisma.course.count({ where: { status: "PUBLISHED" } }),
-    prisma.student.count(),
-    prisma.category.count(),
-  ]);
+  // Fetch stats with fallback for build time
+  let coursesCount = 0;
+  let studentsCount = 0;
+  let categoriesCount = 0;
+
+  try {
+    const results = await Promise.all([
+      prisma.course.count({ where: { status: "PUBLISHED" } }),
+      prisma.student.count(),
+      prisma.category.count(),
+    ]);
+    coursesCount = results[0];
+    studentsCount = results[1];
+    categoriesCount = results[2];
+  } catch (error) {
+    // During build time without DATABASE_URL, use default values
+    console.warn("Database not available during build, using default stats");
+  }
 
   return (
     <div className="flex flex-col">

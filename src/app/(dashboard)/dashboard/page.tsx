@@ -8,6 +8,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { formatDuration } from "@/lib/utils";
 
+// Ensure fresh enrollment data after payment
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export default async function DashboardPage() {
   const user = await getCurrentUser();
 

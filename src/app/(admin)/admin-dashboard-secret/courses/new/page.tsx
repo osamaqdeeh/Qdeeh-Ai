@@ -3,9 +3,17 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { CreateCourseForm } from "@/components/admin/create-course-form";
+import { prisma } from "@/lib/prisma";
+
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export default async function NewCoursePage() {
   await requireAdmin();
+
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
+  });
 
   return (
     <div className="space-y-6">
@@ -23,7 +31,7 @@ export default async function NewCoursePage() {
         </div>
       </div>
 
-      <CreateCourseForm categories={[]} />
+      <CreateCourseForm categories={categories} />
     </div>
   );
 }

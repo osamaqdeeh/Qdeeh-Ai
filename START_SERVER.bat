@@ -18,8 +18,8 @@ echo The server will be available at: http://localhost:3000
 echo.
 echo Login credentials:
 echo   Admin: http://localhost:3000/admin-dashboard-secret
-echo          Email: admin@example.com
-echo          Password: admin123
+echo          Email: qdeehai@gmail.com
+echo          Password: qdeeh059ai
 echo.
 echo   Student: Email: student@example.com
 echo            Password: student123

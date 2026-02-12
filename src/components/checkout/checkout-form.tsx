@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Tag, CheckCircle2, XCircle } from "lucide-react";
 import { validateCoupon } from "@/lib/actions/coupons";
-import { createPaymentIntent } from "@/lib/actions/payment";
 import { createFreeEnrollment } from "@/lib/actions/enrollment";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -106,26 +105,20 @@ export function CheckoutForm({ courseId, courseTitle, basePrice, originalPrice }
             title: "Enrolled Successfully!",
             description: "You now have access to the course",
           });
+          
+          // Refresh router to clear cache
+          router.refresh();
+          
           // Redirect to success page
           router.push(`/checkout/success?course=${result.courseSlug}`);
         }
       } else {
-        // Process paid enrollment
-        const result = await createPaymentIntent(
-          courseId,
-          appliedCoupon?.code
-        );
-
-        if (result.error) {
-          toast({
-            title: "Error",
-            description: result.error,
-            variant: "destructive",
-          });
-        } else if (result.success && result.clientSecret) {
-          // Redirect to payment page with Stripe Elements
-          router.push(`/checkout/${courseId}/payment?client_secret=${result.clientSecret}`);
-        }
+        // Redirect to fake payment page with amount and coupon info
+        const params = new URLSearchParams({
+          amount: finalPrice.toString(),
+          ...(appliedCoupon?.code && { coupon: appliedCoupon.code }),
+        });
+        router.push(`/checkout/${courseId}/payment?${params.toString()}`);
       }
     } catch {
       toast({

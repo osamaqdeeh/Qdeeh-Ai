@@ -8,6 +8,10 @@ import { LessonVideoPlayer } from "@/components/lesson/lesson-video-player";
 import { ChevronLeft, ChevronRight, CheckCircle2, FileText, Download } from "lucide-react";
 import Link from "next/link";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 interface LessonPageProps {
   params: Promise<{
     slug: string;

@@ -89,6 +89,7 @@ export async function createFreeEnrollment(courseId: string, couponCode?: string
 
     revalidatePath("/dashboard");
     revalidatePath(`/courses/${course.slug}`);
+    revalidatePath(`/checkout/${courseId}`);
     
     return { success: true, courseSlug: course.slug };
   } catch (error) {

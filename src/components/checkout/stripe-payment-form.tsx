@@ -65,6 +65,9 @@ export function StripePaymentForm({ clientSecret, courseId, courseSlug }: Stripe
         description: "Redirecting to your course...",
       });
 
+      // Refresh router to clear cache
+      router.refresh();
+
       // Redirect to success page or course
       setTimeout(() => {
         router.push(`/checkout/success?course=${courseSlug}`);

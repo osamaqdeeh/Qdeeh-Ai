@@ -3,6 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { CreateCourseForm } from "@/components/admin/create-course-form";
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export default async function EditCoursePage({
   params,
 }: {
